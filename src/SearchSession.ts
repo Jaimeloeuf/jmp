@@ -25,7 +25,7 @@ type SearchResult = {
   decoration: vscode.TextEditorDecorationType;
 };
 
-export class Search {
+export class SearchSession {
   constructor(
     private readonly editor: vscode.TextEditor,
     private readonly visibleLines: Array<vscode.TextLine>

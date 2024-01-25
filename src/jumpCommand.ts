@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-import { Search } from "./Search";
+import { SearchSession } from "./SearchSession";
 import { getVisibleLines } from "./utils";
 
 export function jumpCommand() {
@@ -14,7 +14,7 @@ export function jumpCommand() {
 
   const visibleLines = getVisibleLines(editor);
 
-  const search = new Search(editor, visibleLines);
+  const searchSession = new SearchSession(editor, visibleLines);
 
   /**
    * Create a new InputBox to handle user input and show them what they typed
@@ -24,11 +24,11 @@ export function jumpCommand() {
 
   inputBox.onDidChangeValue((searchString) => {
     if (searchString.length === 0) {
-      search.zeroCharacter();
+      searchSession.zeroCharacter();
     } else if (searchString.length === 1) {
-      search.oneCharacter(searchString);
+      searchSession.oneCharacter(searchString);
     } else if (searchString.length === 2) {
-      search.twoCharacter(searchString);
+      searchSession.twoCharacter(searchString);
     } else if (searchString.length > 2) {
       //
     }
@@ -39,7 +39,7 @@ export function jumpCommand() {
    * existing decorations and dispose the input box to clean up.
    */
   inputBox.onDidHide(() => {
-    search.removeAllDecorations();
+    searchSession.removeAllDecorations();
     inputBox.dispose();
   });
 
