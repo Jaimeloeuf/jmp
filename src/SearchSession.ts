@@ -103,17 +103,6 @@ export class SearchSession {
   }
 
   /**
-   * If the current search string is nothing.
-   *
-   * Tasks
-   * 1. Clear all label decorations
-   * 2. Clear search results
-   */
-  zeroCharacter() {
-    this.cleanUp();
-  }
-
-  /**
    * If the current search string in a single character.
    *
    * Tasks
