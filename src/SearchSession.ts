@@ -58,6 +58,14 @@ export class SearchSession {
   }
 
   /**
+   * Jump to a given position
+   */
+  private jumpTo(position: vscode.Position) {
+    // Jump cursor to new position using selection
+    this.editor.selection = new vscode.Selection(position, position);
+  }
+
+  /**
    * If the current search string is nothing.
    *
    * Tasks
@@ -137,6 +145,19 @@ export class SearchSession {
     }
 
     this.searchResults = refinedSearchResults;
+
+    // If only 1 result left after refining, jump there immediately and clean up
+    if (refinedSearchResults.length === 1) {
+      this.jumpTo(refinedSearchResults[0].position);
+
+      this.searchResults = refinedSearchResults;
+
+      // Cleanup after jumping cursor to new position
+      this.cleanUp();
+
+      // Return true to indicate found so that the caller can remove the input box
+      return true;
+    }
   }
 
   /**
@@ -154,11 +175,7 @@ export class SearchSession {
 
     for (const searchResult of this.searchResults) {
       if (searchResult.label === selectedLabel) {
-        // Jump cursor to new position
-        this.editor.selection = new vscode.Selection(
-          searchResult.position,
-          searchResult.position
-        );
+        this.jumpTo(searchResult.position);
 
         // Cleanup after jumping cursor to new position
         this.cleanUp();

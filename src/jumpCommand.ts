@@ -28,7 +28,10 @@ export function jumpCommand() {
     } else if (searchString.length === 1) {
       searchSession.oneCharacter(searchString);
     } else if (searchString.length === 2) {
-      searchSession.twoCharacter(searchString);
+      // Close input box if the target is found
+      if (searchSession.twoCharacter(searchString)) {
+        inputBox.dispose();
+      }
     } else if (searchString.length > 2) {
       // Close input box once the target is found
       if (searchSession.findLabel(searchString)) {
