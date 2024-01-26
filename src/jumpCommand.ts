@@ -14,31 +14,23 @@ export function jumpCommand() {
 
   const visibleLines = getVisibleLines(editor);
 
-  const searchSession = new SearchSession(editor, visibleLines);
-
   /**
    * Create a new InputBox to handle user input and show them what they typed
    * instead of doing dynamic key logging as this should be more performant.
    */
   const inputBox = vscode.window.createInputBox();
 
-  inputBox.onDidChangeValue((searchString) => {
-    if (searchString.length === 0) {
-      searchSession.zeroCharacter();
-    } else if (searchString.length === 1) {
-      searchSession.oneCharacter(searchString);
-    } else if (searchString.length === 2) {
-      // Close input box if the target is found
-      if (searchSession.twoCharacter(searchString)) {
-        inputBox.dispose();
-      }
-    } else if (searchString.length > 2) {
-      // Close input box once the target is found
-      if (searchSession.findLabel(searchString)) {
-        inputBox.dispose();
-      }
-    }
-  });
+  /**
+   * Create a new `SearchSession` with the editor and inputBox so that it can
+   * maintain its own internal state and control the editor and inputBox.
+   */
+  const searchSession = new SearchSession(editor, inputBox, visibleLines);
+
+  /**
+   * Use `onSearchStringChange` method to dispatch specific `SearchSession`
+   * methods internally everytime user changes their search input.
+   */
+  inputBox.onDidChangeValue(searchSession.onSearchStringChange);
 
   /**
    * If user removes the inputBox themselves with escape key, remove all

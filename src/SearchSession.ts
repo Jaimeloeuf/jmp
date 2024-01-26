@@ -28,6 +28,7 @@ type SearchResult = {
 export class SearchSession {
   constructor(
     private readonly editor: vscode.TextEditor,
+    private readonly inputBox: vscode.InputBox,
     private readonly visibleLines: Array<vscode.TextLine>
   ) {}
 
@@ -35,6 +36,42 @@ export class SearchSession {
    * Defaults to no search result right now.
    */
   searchResults: Array<SearchResult> = [];
+
+  /**
+   * Run this method with the new search string on every change for it to
+   * dispatch different `SearchSession` methods and handle the results.
+   */
+  onSearchStringChange(searchString: string) {
+    // If there is no search string, clean up the decoration overlay.
+    if (searchString.length === 0) {
+      this.cleanUp();
+      return;
+    }
+
+    // Begin search and create selector overlay
+    if (searchString.length === 1) {
+      this.oneCharacter(searchString);
+      return;
+    }
+
+    // Refine existing search results
+    if (searchString.length === 2) {
+      // Close input box if the target is found
+      if (this.twoCharacter(searchString)) {
+        this.inputBox.dispose();
+      }
+      return;
+    }
+
+    // Find and jump to label.
+    if (searchString.length > 2) {
+      // Close input box once the target is found
+      if (this.findLabel(searchString)) {
+        this.inputBox.dispose();
+      }
+      return;
+    }
+  }
 
   /**
    * Removes all decorations of `this.searchResults`. If a decoration is somehow
