@@ -42,6 +42,9 @@ export class SearchSession {
    * dispatch different `SearchSession` methods and handle the results.
    */
   onSearchStringChange(searchString: string) {
+    // Always clear any previous error on input change
+    this.inputBox.validationMessage = undefined;
+
     // If there is no search string, clean up the decoration overlay.
     if (searchString.length === 0) {
       this.cleanUp();
@@ -51,26 +54,21 @@ export class SearchSession {
     // Begin search and create selector overlay
     if (searchString.length === 1) {
       this.oneCharacter(searchString);
+      this.errorIfNoResult();
       return;
     }
 
     // Refine existing search results
     if (searchString.length === 2) {
-      // Close input box if the target is found
-      if (this.twoCharacter(searchString)) {
-        this.inputBox.dispose();
-      }
+      this.twoCharacter(searchString);
+      this.errorIfNoResult();
       return;
     }
 
-    // Find and jump to label.
-    if (searchString.length > 2) {
-      // Close input box once the target is found
-      if (this.findLabel(searchString)) {
-        this.inputBox.dispose();
-      }
-      return;
-    }
+    // For any searchString.length > 2, find and jump to label.
+    this.findLabel(searchString);
+    this.errorIfNoResult();
+    return;
   }
 
   /**
@@ -100,6 +98,16 @@ export class SearchSession {
   private jumpTo(position: vscode.Position) {
     // Jump cursor to new position using selection
     this.editor.selection = new vscode.Selection(position, position);
+  }
+
+  /**
+   * Set error on `inputBox` if there is no valid search results for the last
+   * used `searchString`.
+   */
+  private errorIfNoResult() {
+    if (this.searchResults.length === 0) {
+      this.inputBox.validationMessage = "Nothing matches your search term";
+    }
   }
 
   /**
@@ -181,8 +189,8 @@ export class SearchSession {
       // Cleanup after jumping cursor to new position
       this.cleanUp();
 
-      // Return true to indicate found so that the caller can remove the input box
-      return true;
+      // Close input box once target is found
+      this.inputBox.dispose();
     }
   }
 
@@ -206,8 +214,11 @@ export class SearchSession {
         // Cleanup after jumping cursor to new position
         this.cleanUp();
 
-        // Return true to indicate found so that the caller can remove the input box
-        return true;
+        // Close input box once target is found
+        this.inputBox.dispose();
+
+        // Return early once target is found
+        return;
       }
 
       // If it is a multi-character label, and the selected label is part of it,
