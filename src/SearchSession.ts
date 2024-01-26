@@ -121,11 +121,22 @@ export class SearchSession {
    *
    * Tasks
    * 1. Refine search by filtering out existing search results
-   *
-   * alert error if there are no search results left after filtering
    */
   twoCharacter(searchString: string) {
-    //
+    const refinedSearchResults: typeof this.searchResults = [];
+
+    for (const searchResult of this.searchResults) {
+      // Keep a search result if it is still valid after refinement
+      if (searchResult.firstTwoChar === searchString) {
+        refinedSearchResults.push(searchResult);
+        continue;
+      }
+
+      // Remove the filtered out search result's decoration
+      searchResult.decoration.dispose();
+    }
+
+    this.searchResults = refinedSearchResults;
   }
 
   /**
