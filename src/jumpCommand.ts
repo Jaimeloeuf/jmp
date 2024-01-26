@@ -30,7 +30,9 @@ export function jumpCommand() {
    * Use `onSearchStringChange` method to dispatch specific `SearchSession`
    * methods internally everytime user changes their search input.
    */
-  inputBox.onDidChangeValue(searchSession.onSearchStringChange);
+  inputBox.onDidChangeValue(
+    searchSession.onSearchStringChange.bind(searchSession)
+  );
 
   /**
    * If user removes the inputBox themselves with escape key, remove all
