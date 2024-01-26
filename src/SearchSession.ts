@@ -41,7 +41,10 @@ export class SearchSession {
    * not tracked in this array, then it will not be removed.
    */
   removeAllDecorations() {
-    //
+    // Remove all the previous search result's decorations
+    for (const searchResult of this.searchResults) {
+      searchResult.decoration.dispose();
+    }
   }
 
   /**
@@ -69,14 +72,48 @@ export class SearchSession {
    * If the current search string in a single character.
    *
    * Tasks
-   * 1. Search for start positions
-   *        clear previous search results and labels? SMth like zero char
-   *         this is to deal with backspace to clear search
-   * 2. Generate labels
-   * 3. Show labels
+   * 1. Clear past search results and decorations first
+   * 2. Search for possible search results and save the results for later
+   * 3. Generate labels for each search result
+   * 4. Show labels
    */
   oneCharacter(firstChar: string) {
-    //
+    // Clear decorations and search results first, because this method can run
+    // when going from 2 to 1 characters when a user deletes a character, so
+    // these must be removed before populating new search results.
+    this.removeAllDecorations();
+    this.searchResults = [];
+
+    // Loop through every visible line and every character of each line to
+    // populate the list of search results.
+    for (const line of this.visibleLines) {
+      const text = line.text;
+      const length = text.length;
+
+      // Loop through the line to find if the search string exists
+      // @todo This is quite slow as there's lots of white space to search
+      for (let i = 0; i < length - 1; i++)
+        // @todo make lowercase configurable
+        // @todo this expects search string to always be lowercase right now
+        if (firstChar === text[i].toLowerCase()) {
+          const label = generateLabel(firstChar);
+          const decoration = createDecorationWithLabel(label);
+          const position = new vscode.Position(line.lineNumber, i);
+
+          // Set decoration / injected text label after the first 2 character
+          this.editor.setDecorations(decoration, [
+            { range: new vscode.Range(position, position.translate(0, 2)) },
+          ]);
+
+          // Save the search result to filter in the next step
+          this.searchResults.push({
+            firstTwoChar: `${text[i]}${text[i + 1]}`,
+            label,
+            position,
+            decoration,
+          });
+        }
+    }
   }
 
   /**
