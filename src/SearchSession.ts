@@ -138,7 +138,7 @@ export class SearchSession {
         // @todo make lowercase configurable
         // @todo this expects search string to always be lowercase right now
         if (firstChar === text[i].toLowerCase()) {
-          const label = generateLabel(firstChar);
+          const label = generateLabel(this.searchResults.length);
           const decoration = createDecorationWithLabel(label);
           const position = new vscode.Position(line.lineNumber, i);
 
