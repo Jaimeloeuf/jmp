@@ -145,10 +145,39 @@ export class SearchSession {
    *
    * Tasks
    * 1. Refine search by filtering out existing search results
-   *
-   * alert error if there are no search results left after filtering
    */
   findLabel(searchString: string) {
-    //
+    // Selected label is typed with the search string after first 2 characters.
+    const selectedLabel = searchString.substring(2);
+
+    const refinedSearchResults: typeof this.searchResults = [];
+
+    for (const searchResult of this.searchResults) {
+      if (searchResult.label === selectedLabel) {
+        // Jump cursor to new position
+        this.editor.selection = new vscode.Selection(
+          searchResult.position,
+          searchResult.position
+        );
+
+        // Cleanup after jumping cursor to new position
+        this.cleanUp();
+
+        // Return true to indicate found so that the caller can remove the input box
+        return true;
+      }
+
+      // If it is a multi-character label, and the selected label is part of it,
+      // then leave it in the `refinedSearchResults` for further refinement.
+      else if (searchResult.label.startsWith(selectedLabel)) {
+        refinedSearchResults.push(searchResult);
+        continue;
+      }
+
+      // Remove the filtered out search result's decoration
+      searchResult.decoration.dispose();
+    }
+
+    this.searchResults = refinedSearchResults;
   }
 }
