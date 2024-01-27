@@ -137,11 +137,14 @@ export class SearchSession {
     // Loop through every visible line's individual characters to find matches
     for (const line of this.visibleLines) {
       const text = line.text;
-      const length = text.length;
+
+      // -1 skips the last character since we need to extract `firstTwoChar`,
+      // and the last char wont have anymore second chars to combine.
+      const length = text.length - 1;
 
       // Loop through the line to find if the search string exists
       // @todo This is quite slow as there's lots of white space to search
-      for (let i = 0; i < length - 1; i++)
+      for (let i = 0; i < length; i++)
         // @todo make lowercase configurable
         // @todo this expects search string to always be lowercase right now
         if (firstChar === text[i].toLowerCase())
