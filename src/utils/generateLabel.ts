@@ -20,7 +20,7 @@ const numOfAvailableLabellingChars = labellingChars.length;
 export function generateLabel(numOfUsedLabels: number) {
   // If there is more labels used than available `labellingChars`, the new label
   // will be a multicharacter label.
-  if (numOfUsedLabels > numOfAvailableLabellingChars) {
+  if (numOfUsedLabels >= numOfAvailableLabellingChars) {
     const quotient = Math.floor(numOfUsedLabels / numOfAvailableLabellingChars);
     const remainder = numOfUsedLabels % numOfAvailableLabellingChars;
 
