@@ -3,5 +3,5 @@
  */
 
 export * from "./getVisibleLines";
-export * from "./generateLabel";
+export * from "./createLabelMaker";
 export * from "./createDecorationWithLabel";

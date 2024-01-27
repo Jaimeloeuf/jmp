@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-import { generateLabel, createDecorationWithLabel } from "./utils";
+import { createLabelMaker, createDecorationWithLabel } from "./utils";
 
 type SearchResult = {
   /**
@@ -126,8 +126,15 @@ export class SearchSession {
     this.removeAllDecorations();
     this.searchResults = [];
 
-    // Loop through every visible line and every character of each line to
-    // populate the list of search results.
+    /**
+     * An array of partial search results before generating the labels and their
+     * corresponding decorations to save in `this.searchResults`
+     */
+    const searchResultsWithoutLabelAndDecoration: Array<
+      Pick<(typeof this.searchResults)[number], "firstTwoChar" | "position">
+    > = [];
+
+    // Loop through every visible line's individual characters to find matches
     for (const line of this.visibleLines) {
       const text = line.text;
       const length = text.length;
@@ -137,24 +144,33 @@ export class SearchSession {
       for (let i = 0; i < length - 1; i++)
         // @todo make lowercase configurable
         // @todo this expects search string to always be lowercase right now
-        if (firstChar === text[i].toLowerCase()) {
-          const label = generateLabel(this.searchResults.length);
-          const decoration = createDecorationWithLabel(label);
-          const position = new vscode.Position(line.lineNumber, i);
-
-          // Set decoration / injected text label after the first 2 character
-          this.editor.setDecorations(decoration, [
-            { range: new vscode.Range(position, position.translate(0, 2)) },
-          ]);
-
-          // Save the search result to filter in the next step
-          this.searchResults.push({
+        if (firstChar === text[i].toLowerCase())
+          searchResultsWithoutLabelAndDecoration.push({
             firstTwoChar: `${text[i]}${text[i + 1]}`,
-            label,
-            position,
-            decoration,
+            position: new vscode.Position(line.lineNumber, i),
           });
-        }
+    }
+
+    const makeLabel = createLabelMaker(
+      searchResultsWithoutLabelAndDecoration.length
+    );
+
+    // Make label, create and apply decoration for label, and save searchResult
+    for (const partialSearchResult of searchResultsWithoutLabelAndDecoration) {
+      const label = makeLabel(this.searchResults.length);
+      const decoration = createDecorationWithLabel(label);
+
+      // Set decoration / injected text label after the first 2 character
+      this.editor.setDecorations(decoration, [
+        {
+          range: new vscode.Range(
+            partialSearchResult.position,
+            partialSearchResult.position.translate(0, 2)
+          ),
+        },
+      ]);
+
+      this.searchResults.push({ ...partialSearchResult, label, decoration });
     }
   }
 
