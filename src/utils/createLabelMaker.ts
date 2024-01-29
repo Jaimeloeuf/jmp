@@ -1,13 +1,7 @@
-/**
- * @todo generate base on proximity
- */
-const labellingChars = "fjeirudkp ";
+import { getLabellingChars } from "./labellingChars";
 
-/**
- * Pre-compute number of available labelling characters so that this doesn't
- * need to be read over and over again when generating labels.
- */
-const numOfAvailableLabellingChars = labellingChars.length;
+const { numOfAvailableLabellingChars, labellingCharTable } =
+  getLabellingChars();
 
 /**
  * Create a new label maker based on the number of search results, where the
@@ -59,7 +53,17 @@ export function createLabelMaker(totalNumberOfSearchResults: number) {
     index
       .toString(numOfAvailableLabellingChars)
       .split("")
-      .map((i) => labellingChars[parseInt(i)])
+      .map((i) => labellingCharTable[i])
       .join("")
-      .padStart(numberOfCharactersForLabel, labellingChars[0]);
+      .padStart(numberOfCharactersForLabel, labellingCharTable["0"]);
+
+  // Alternative indexing `labellingChars` directly only if
+  // `numOfAvailableLabellingChars` is 10 or less.
+  // return (index: number) =>
+  //   index
+  //     .toString(numOfAvailableLabellingChars)
+  //     .split("")
+  //     .map((i) => labellingChars[parseInt(i)])
+  //     .join("")
+  //     .padStart(numberOfCharactersForLabel, labellingChars[0]);
 }
