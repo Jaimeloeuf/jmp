@@ -96,6 +96,14 @@ export class SearchSession {
   private jumpTo(position: vscode.Position) {
     // Jump cursor to new position using selection
     this.editor.selection = new vscode.Selection(position, position);
+
+    // Doing a strict equality check to ensure that the value is really set to
+    // true and not just any random truthy value.
+    if (vscode.workspace.getConfiguration("jmp").get("centerOnJump") === true)
+      this.editor.revealRange(
+        this.editor.selection,
+        vscode.TextEditorRevealType.InCenter
+      );
   }
 
   /**

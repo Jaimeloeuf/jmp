@@ -17,7 +17,17 @@
         "command": "jmp.jump",
         "title": "Jump to a location"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "JMP",
+      "properties": {
+        "jmp.centerOnJump": {
+          "description": "Move line of jump target to center of screen.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
