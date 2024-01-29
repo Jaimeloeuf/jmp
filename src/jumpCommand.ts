@@ -43,6 +43,9 @@ export function jumpCommand() {
     inputBox.dispose();
   });
 
+  inputBox.prompt =
+    "Enter the first 2 characters after the cursor point where you want to jump to followed by the generated labels";
+
   // Only show input box after everything is configured.
   inputBox.show();
 }

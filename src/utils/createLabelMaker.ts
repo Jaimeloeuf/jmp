@@ -49,7 +49,7 @@ export function createLabelMaker(totalNumberOfSearchResults: number) {
   );
 
   console.debug(
-    `JMP: Label Maker, `,
+    `JMP: Label Maker,`,
     totalNumberOfSearchResults,
     numberOfCharactersForLabel,
     numOfAvailableLabellingChars
