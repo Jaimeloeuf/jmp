@@ -205,8 +205,14 @@ export class SearchSession {
 
     this.searchResults = refinedSearchResults;
 
-    // If only 1 result left after refining, jump there immediately and clean up
-    if (refinedSearchResults.length === 1) {
+    // If only 1 result left after refining and user specifies so, jump there
+    // immediately and clean up without waiting for the label.
+    // Doing a strict equality check to ensure that the value is really set to
+    // true and not just any random truthy value.
+    if (
+      refinedSearchResults.length === 1 &&
+      vscode.workspace.getConfiguration("jmp").get("jumpOnFound") === true
+    ) {
       this.jumpTo(refinedSearchResults[0].position);
 
       this.searchResults = refinedSearchResults;

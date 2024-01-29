@@ -21,6 +21,11 @@
     "configuration": {
       "title": "JMP",
       "properties": {
+        "jmp.jumpOnFound": {
+          "description": "Jump to target immediately if the first 2 characters is unique.",
+          "type": "boolean",
+          "default": false
+        },
         "jmp.centerOnJump": {
           "description": "Move line of jump target to center of screen.",
           "type": "boolean",
