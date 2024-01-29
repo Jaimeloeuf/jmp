@@ -18,6 +18,18 @@
         "title": "Jump to a location"
       }
     ],
+    "keybindings": [
+      {
+        "key": "Cmd+e",
+        "command": "jmp.jump",
+        "when": "editorTextFocus && isMac"
+      },
+      {
+        "key": "Alt+e",
+        "command": "jmp.jump",
+        "when": "editorTextFocus && (isWindows || isLinux)"
+      }
+    ],
     "configuration": {
       "title": "JMP",
       "properties": {
@@ -38,9 +50,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "lint": "eslint src --ext ts"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",
@@ -48,8 +58,6 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
-    "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.8"
+    "typescript": "^5.3.3"
   }
 }

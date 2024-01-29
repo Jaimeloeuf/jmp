@@ -1,9 +1,11 @@
 # jmp
-VS Code motion extension inspired by leap.nvim and other similar projects. Named after the JMP instruction.
+VS Code motion extension inspired by leap.nvim and other similar projects. Named after the JMP assembly instruction.
 
 
 ## Features
-Allows you to jump to anywhere within the visible editor.
+Allows you to jump to anywhere within the visible editor using keystrokes by specifying the first 2 characters after the cursor point where you want to jump to followed by the generated labels.
+
+Use the keybindings `Cmd+e` for Mac and `Alt+e` for Windows/Linux to trigger the command.
 
 
 ## Extension Settings
