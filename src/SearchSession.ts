@@ -2,29 +2,6 @@ import * as vscode from "vscode";
 
 import { createLabelMaker, createDecorationWithLabel } from "./utils";
 
-type SearchResult = {
-  /**
-   * The first 2 character of the search result string.
-   */
-  firstTwoChar: string;
-
-  /**
-   * Assigned label for this `SearchResult`.
-   */
-  label: string;
-
-  /**
-   * Start position of the search result's first character.
-   */
-  position: vscode.Position;
-
-  /**
-   * The decoration type object created for this `SearchResult`.
-   * This is tracked so that it can be removed after.
-   */
-  decoration: vscode.TextEditorDecorationType;
-};
-
 export class SearchSession {
   constructor(
     private readonly editor: vscode.TextEditor,
@@ -35,7 +12,28 @@ export class SearchSession {
   /**
    * Defaults to no search result right now.
    */
-  searchResults: Array<SearchResult> = [];
+  searchResults: Array<{
+    /**
+     * The first 2 character of the search result string.
+     */
+    firstTwoChar: string;
+
+    /**
+     * Assigned label for this `SearchResult`.
+     */
+    label: string;
+
+    /**
+     * Start position of the search result's first character.
+     */
+    position: vscode.Position;
+
+    /**
+     * The decoration type object created for this `SearchResult`.
+     * This is tracked so that it can be removed after.
+     */
+    decoration: vscode.TextEditorDecorationType;
+  }> = [];
 
   /**
    * Run this method with the new search string on every change for it to
