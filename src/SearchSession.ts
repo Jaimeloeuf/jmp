@@ -155,7 +155,7 @@ export class SearchSession {
         // @todo this expects search string to always be lowercase right now
         if (firstChar === text[i].toLowerCase())
           searchResultsWithoutLabelAndDecoration.push({
-            firstTwoChar: `${text[i]}${text[i + 1]}`,
+            firstTwoChar: `${text[i]}${text[i + 1]}`.toLowerCase(),
             position: new vscode.Position(line.lineNumber, i),
           });
     }
@@ -194,7 +194,7 @@ export class SearchSession {
 
     for (const searchResult of this.searchResults) {
       // Keep a search result if it is still valid after refinement
-      if (searchResult.firstTwoChar === searchString) {
+      if (searchString === searchResult.firstTwoChar) {
         refinedSearchResults.push(searchResult);
         continue;
       }
