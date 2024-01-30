@@ -9,10 +9,10 @@ export function getVisibleLines(editor: vscode.TextEditor) {
 
   for (const range of editor.visibleRanges) {
     /**
-     * For some reason, it always leaves out a line or 2 and treats it as not
-     * visible, so this just adds 2 to ensure all visible area is included.
+     * For some reason it always leaves out a line and treats it as not visible,
+     * so this just adds 1 to ensure all visible area is included.
      */
-    const lastLine = range.end.line + 2;
+    const lastLine = range.end.line + 1;
 
     for (let lineNumber = range.start.line; lineNumber < lastLine; lineNumber++)
       lines.push(editor.document.lineAt(lineNumber));
