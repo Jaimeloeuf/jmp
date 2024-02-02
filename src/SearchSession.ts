@@ -117,6 +117,21 @@ export class SearchSession {
   }
 
   /**
+   * Jump to target if there is only a single result left. Else do nothing. This
+   * allows users to shortcut the jump process if the label is really long but
+   * there is only 1 result left.
+   */
+  jumpIfOne() {
+    if (this.searchResults.length === 1) {
+      this.jumpTo(this.searchResults[0].position);
+
+      // Cleanup after jumping
+      this.cleanUp();
+      this.inputBox.dispose();
+    }
+  }
+
+  /**
    * If the current search string in a single character.
    *
    * Tasks

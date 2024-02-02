@@ -35,6 +35,12 @@ export function jumpCommand() {
   );
 
   /**
+   * When the user press the enter button, jump to the search result if there is
+   * only a single result left at the point of pressing the button.
+   */
+  inputBox.onDidAccept(searchSession.jumpIfOne.bind(searchSession));
+
+  /**
    * If user removes the inputBox themselves with escape key, remove all
    * existing decorations and dispose the input box to clean up.
    */
