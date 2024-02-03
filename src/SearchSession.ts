@@ -10,6 +10,12 @@ export class SearchSession {
   ) {}
 
   /**
+   * Variable to track the last used searchString to determine if user pressed
+   * backspace, and to reset search process if they pressed backspace.
+   */
+  lastSearchString: string = "";
+
+  /**
    * Defaults to no search result right now.
    */
   searchResults: Array<{
@@ -42,6 +48,17 @@ export class SearchSession {
   onSearchStringChange(searchString: string) {
     // Always clear any previous error on input change
     this.inputBox.validationMessage = undefined;
+
+    // If user pressed backspace, reset search process by clearing everything
+    if (this.lastSearchString.length > searchString.length) {
+      this.inputBox.value = "";
+      this.cleanUp();
+      return;
+    }
+
+    // Set the new searchString as the lastSearchString once lastSearchString
+    // has been used to check if user pressed backspace.
+    this.lastSearchString = searchString;
 
     // If there is no search string, clean up the decoration overlay.
     if (searchString.length === 0) {
