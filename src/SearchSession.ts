@@ -105,6 +105,7 @@ export class SearchSession {
   private cleanUp() {
     this.removeAllDecorations();
     this.searchResults = [];
+    this.lastSearchString = "";
   }
 
   /**
