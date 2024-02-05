@@ -6,8 +6,28 @@
   "engines": {
     "vscode": "^1.85.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jaimeloeuf/jmp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jaimeloeuf/jmp/issues"
+  },
+  "author": "JJ",
+  "publisher": "JJ",
+  "license": "MIT",
+  "icon": "logo.png",
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "shortcuts",
+    "goto",
+    "jump",
+    "seek",
+    "leap",
+    "easymotion",
+    "motion"
   ],
   "activationEvents": [
     "*"
