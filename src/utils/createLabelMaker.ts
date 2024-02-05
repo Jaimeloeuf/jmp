@@ -49,12 +49,21 @@ export function createLabelMaker(totalNumberOfSearchResults: number) {
     numOfAvailableLabellingChars
   );
 
+  /**
+   * Convert the given index into a string of characters (think of it like
+   * converting a number to its Hex form) and converting each of the character
+   * into an actual labelling character.
+   */
   return (index: number) =>
     index
       .toString(numOfAvailableLabellingChars)
       .split("")
       .map((i) => labellingCharTable[i])
       .join("")
+      // E.g. if 3 characters required and index is 2, toString only generates
+      // a single character instead of 3 characters, which is the same as saying
+      // the first 2 characters are "0", which is why we can hardcode the access
+      // here to just use the first character in the labelling characters table.
       .padStart(numberOfCharactersForLabel, labellingCharTable["0"]);
 
   // Alternative indexing `labellingChars` directly only if
