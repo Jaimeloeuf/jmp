@@ -174,9 +174,7 @@ export class SearchSession {
     > = [];
 
     // Loop through every visible line's individual characters to find matches
-    for (const line of this.visibleLines) {
-      const text = line.text;
-
+    for (const { text, lineNumber } of this.visibleLines) {
       // -1 skips the last character since we need to extract `firstTwoChar`,
       // and the last char wont have anymore second chars to combine.
       const length = text.length - 1;
@@ -189,7 +187,7 @@ export class SearchSession {
         if (firstChar === text[i].toLowerCase())
           searchResultsWithoutLabelAndDecoration.push({
             firstTwoChar: `${text[i]}${text[i + 1]}`.toLowerCase(),
-            position: new vscode.Position(line.lineNumber, i),
+            position: new vscode.Position(lineNumber, i),
           });
     }
 
