@@ -2,7 +2,7 @@
   "name": "jmp",
   "displayName": "jmp",
   "description": "Motion extension to jump to anywhere in visible editor.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -14,7 +14,10 @@
     "url": "https://github.com/Jaimeloeuf/jmp/issues"
   },
   "author": "JJ",
-  "publisher": "JJ",
+  "publisher": "Jaimeloeuf",
+  "sponsor": {
+    "url": "https://ko-fi.com/jaimeloeuf/"
+  },
   "license": "MIT",
   "icon": "logo.png",
   "categories": [

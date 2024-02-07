@@ -1,6 +1,8 @@
 # jmp
 VS Code motion extension inspired by leap.nvim and other similar projects. Named after the JMP assembly instruction.
 
+If you would like to support my work or this project, you can do so on [https://ko-fi.com/jaimeloeuf/](https://ko-fi.com/jaimeloeuf/) thank you!
+
 
 ## Features
 Allows you to jump to anywhere within the visible editor using keystrokes by specifying the first 2 characters after the cursor point where you want to jump to followed by the generated labels.
