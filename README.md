@@ -56,3 +56,15 @@ Steps to build:
 1. Press F5 on extension.ts to start and a new VSCode window will open
 1. Test the feature/fix and iterate on it.
 1. Build using `vsce package`
+
+
+## Others
+Here are some alternatives to this extension. The biggest difference being that this extension will show the labels from the first keystroke instead of the second, so you can see the labels earlier and type them out faster. The other thing is that the labels are stable meaning if you delete the inputs and try again when you type wrongly, it will show the same labels again instead of a new one that you have to read and type.
+
+- https://marketplace.visualstudio.com/items?itemName=wmaurer.vscode-jumpy
+- https://marketplace.visualstudio.com/items?itemName=tranhl.find-then-jump
+- https://marketplace.visualstudio.com/items?itemName=mksafi.find-jump
+- https://marketplace.visualstudio.com/items?itemName=usernamehw.find-jump
+- https://marketplace.visualstudio.com/items?itemName=sharonrolel.vscode-jump
+- https://marketplace.visualstudio.com/items?itemName=lucax88x.codeacejumper
+- https://marketplace.visualstudio.com/items?itemName=bjorn-eric-abr.hopper
