@@ -1,3 +1,4 @@
+import * as vscode from "vscode";
 import { getLabellingChars } from "./labellingChars";
 
 const { numOfAvailableLabellingChars, labellingCharTable } =
@@ -49,13 +50,20 @@ export function createLabelMaker(totalNumberOfSearchResults: number) {
     numOfAvailableLabellingChars
   );
 
+  const startLabelWithHomeRowChars =
+    vscode.workspace
+      .getConfiguration("jmp")
+      // Doing a strict equality check to ensure that the value is really set to
+      // true and not just any random truthy value.
+      .get("startLabelWithHomeRowChars") === true;
+
   /**
    * Convert the given index into a string of characters (think of it like
    * converting a number to its Hex form) and converting each of the character
    * into an actual labelling character.
    */
-  return (index: number) =>
-    index
+  return (index: number) => {
+    const label = index
       .toString(numOfAvailableLabellingChars)
       .split("")
       .map((i) => labellingCharTable[i])
@@ -65,6 +73,11 @@ export function createLabelMaker(totalNumberOfSearchResults: number) {
       // the first 2 characters are "0", which is why we can hardcode the access
       // here to just use the first character in the labelling characters table.
       .padStart(numberOfCharactersForLabel, labellingCharTable["0"]);
+
+    return startLabelWithHomeRowChars
+      ? label
+      : label.split("").reverse().join("");
+  };
 
   // Alternative indexing `labellingChars` directly only if
   // `numOfAvailableLabellingChars` is 10 or less.

@@ -64,6 +64,11 @@
           "description": "Move line of jump target to center of screen.",
           "type": "boolean",
           "default": false
+        },
+        "jmp.startLabelWithHomeRowChars": {
+          "description": "Always start with home row characters like 'f' and 'j' as the first character of label strings instead of any of the available labelling characters to make it easy to start typing the labelling string with the downside being less chance of pressing a unique key immediately for you to press Enter to jump directly.",
+          "type": "boolean",
+          "default": true
         }
       }
     }

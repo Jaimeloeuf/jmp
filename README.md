@@ -17,6 +17,11 @@ Use the keybindings `Cmd+e` for Mac and `Alt+e` for Windows/Linux to trigger the
     1. Move line of jump target to center of screen.
     1. Defaults to `false`.
         - This scrolls the entire screen to try to show the cursor's line in the center, which is bad if you are not used to the screen jumping around and having to move your eyes and head to follow it. It is expected that your sight is already focused on the jump target when you type in the target label, so turning this off causes the least intrusion to your workflow.
+1. `jmp.startLabelWithHomeRowChars`
+    1. Always start with home row characters like 'f' and 'j' as the first character of label strings instead of any of the available labelling characters to make it easy to start typing the labelling string with the downside being less chance of pressing a unique key immediately for you to press Enter to jump directly.
+    1. Set this to false if you don't mind using non-homerow characters as the starting character of longer labels so that you can have a higher chance of hitting a unique label earlier so that you can press `Enter` to jump directly.
+    1. Defaults to `true`.
+        - This is in line with the design decision to do refinement style search where the labels you type in become increasingly specific, starting from a common character.
 
 
 ## Release Notes
