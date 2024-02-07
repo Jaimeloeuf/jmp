@@ -5,7 +5,22 @@ VS Code motion extension inspired by leap.nvim and other similar projects. Named
 ## Features
 Allows you to jump to anywhere within the visible editor using keystrokes by specifying the first 2 characters after the cursor point where you want to jump to followed by the generated labels.
 
-Use the keybindings `Cmd+e` for Mac and `Alt+e` for Windows/Linux to trigger the command.
+
+## How to use
+1. Use the keybindings `Cmd+e` for Mac and `Alt+e` for Windows/Linux to trigger the command.
+1. Type the first character on the right side of where you want to jump to, you will see labels being added automatically.
+1. Type out the second character and the label, once you type the whole thing, your cursor will jump there.
+1. At any point of time, if there is only 1 label left, you can just press `enter` to jump there without typing in the rest of the label.
+
+### Additional notes
+1. At any point in time, if you made a mistake typing the search character or label, you can just press `backspace`. This will reset the whole search process and empty your search string. However since the labels are deterministic for the same search string, you can just type in the right thing without having to wait and see what is the generated label.
+1. Note that this extension always uses lowercase for everything, do not use uppercase search characters as the results will be casted to lowercase characters and it will not match.
+
+
+### Demo
+[Here is the video on youtube](https://youtu.be/NB7XIcx4Pk8)
+
+[![JMP Demo GIF](./demo.gif)](https://youtu.be/NB7XIcx4Pk8)
 
 
 ## Extension Settings
@@ -30,10 +45,12 @@ Initial release of jmp
 
 
 ## How to contribute
-Create an issue or fork this project!
+Create an issue or fork this project! For bug fixes or feature requests, please create an issue first so that I know you will be working on it, and wait for an approval that any potential contributions will be merged in as I do want to keep this extension lean and simple to make it faster.
 
 Steps to build:
 1. git clone the project
 1. `npm install` to install dependencies
 1. `npm run watch` to watch for source changes and compile using TSC
 1. Press F5 on extension.ts to start and a new VSCode window will open
+1. Test the feature/fix and iterate on it.
+1. Build using `vsce package`
