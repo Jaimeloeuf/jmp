@@ -2,9 +2,9 @@
   "name": "jmp",
   "displayName": "jmp",
   "description": "Motion extension to jump to anywhere in visible editor.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.82.0"
   },
   "repository": {
     "type": "git",
@@ -83,7 +83,7 @@
     "lint": "eslint src --ext ts"
   },
   "devDependencies": {
-    "@types/vscode": "^1.85.0",
+    "@types/vscode": "^1.82.0",
     "@types/node": "18.x",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
